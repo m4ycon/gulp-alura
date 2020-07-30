@@ -7,6 +7,9 @@ const uglify = require('gulp-uglify');
 const usemin = require('gulp-usemin');
 const cssmin = require('gulp-cssmin');
 const browserSync = require('browser-sync');
+const jshint = require('gulp-jshint');
+const jshintStylish = require('jshint-stylish');
+const csslint = require('gulp-csslint');
 
 gulp.task('clean', () => {
   return gulp.src('dist').pipe(clean());
@@ -38,6 +41,18 @@ gulp.task('server', () => {
       baseDir: 'src',
     },
   });
+
+  gulp
+    .watch('src/js/*.js')
+    .on('change', path =>
+      gulp.src(path).pipe(jshint()).pipe(jshint.reporter(jshintStylish))
+    );
+
+  gulp
+    .watch('src/css/*.css')
+    .on('change', path =>
+      gulp.src(path).pipe(csslint()).pipe(csslint.formatter())
+    );
 
   gulp.watch('src/**/*').on('change', browserSync.reload);
 });
