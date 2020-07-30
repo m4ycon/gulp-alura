@@ -8,25 +8,25 @@ const usemin = require('gulp-usemin');
 const cssmin = require('gulp-cssmin');
 
 gulp.task('clean', () => {
-  return gulp.src('src').pipe(clean());
+  return gulp.src('dist').pipe(clean());
 });
 
 gulp.task(
   'copy',
   gulp.series('clean', () => {
-    return gulp.src('dist/**/*').pipe(gulp.dest('src'));
+    return gulp.src('src/**/*').pipe(gulp.dest('dist'));
   })
 );
 
 gulp.task('build-img', () => {
-  return gulp.src('src/img/**/*').pipe(imagemin()).pipe(gulp.dest('src/img'));
+  return gulp.src('dist/img/**/*').pipe(imagemin()).pipe(gulp.dest('dist/img'));
 });
 
 gulp.task('usemin', () => {
   return gulp
-    .src('dist/**/*.html')
+    .src('src/**/*.html')
     .pipe(usemin({ js: [uglify], css: [cssmin] }))
-    .pipe(gulp.dest('src'));
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('default', gulp.series('copy', gulp.parallel('build-img', 'usemin')));
