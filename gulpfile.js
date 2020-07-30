@@ -1,11 +1,12 @@
 const gulp = require('gulp');
 const imagemin = require('gulp-imagemin');
 const clean = require('gulp-clean');
-const htmlReplace = require('gulp-html-replace');
-const concat = require('gulp-concat');
+// const htmlReplace = require('gulp-html-replace');
+// const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const usemin = require('gulp-usemin');
 const cssmin = require('gulp-cssmin');
+const browserSync = require('browser-sync');
 
 gulp.task('clean', () => {
   return gulp.src('dist').pipe(clean());
@@ -30,3 +31,13 @@ gulp.task('usemin', () => {
 });
 
 gulp.task('default', gulp.series('copy', gulp.parallel('build-img', 'usemin')));
+
+gulp.task('server', () => {
+  browserSync.init({
+    server: {
+      baseDir: 'src',
+    },
+  });
+
+  gulp.watch('src/**/*').on('change', browserSync.reload);
+});
