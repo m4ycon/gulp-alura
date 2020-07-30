@@ -10,6 +10,7 @@ const browserSync = require('browser-sync');
 const jshint = require('gulp-jshint');
 const jshintStylish = require('jshint-stylish');
 const csslint = require('gulp-csslint');
+const autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('clean', () => {
   return gulp.src('dist').pipe(clean());
@@ -29,7 +30,7 @@ gulp.task('build-img', () => {
 gulp.task('usemin', () => {
   return gulp
     .src('src/**/*.html')
-    .pipe(usemin({ js: [uglify], css: [cssmin] }))
+    .pipe(usemin({ js: [uglify], css: [autoprefixer, cssmin] }))
     .pipe(gulp.dest('dist'));
 });
 
