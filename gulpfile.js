@@ -3,6 +3,7 @@ const imagemin = require('gulp-imagemin');
 const clean = require('gulp-clean');
 const htmlReplace = require('gulp-html-replace');
 const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
 
 gulp.task('clean', () => {
   return gulp.src('src').pipe(clean());
@@ -23,6 +24,7 @@ gulp.task('concat-js', () => {
   return gulp
     .src(['dist/js/jquery.js', 'dist/js/**/!(jquery)*.js'])
     .pipe(concat('all.js'))
+    .pipe(uglify())
     .pipe(gulp.dest('src/js'));
 });
 
