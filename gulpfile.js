@@ -11,6 +11,7 @@ const jshint = require('gulp-jshint');
 const jshintStylish = require('jshint-stylish');
 const csslint = require('gulp-csslint');
 const autoprefixer = require('gulp-autoprefixer');
+const less = require('gulp-less');
 
 gulp.task('clean', () => {
   return gulp.src('dist').pipe(clean());
@@ -59,6 +60,13 @@ gulp.task('server', () => {
     .on('change', path =>
       gulp.src(path).pipe(csslint()).pipe(csslint.formatter())
     );
+
+  gulp.watch('src/less/*.less').on('change', path =>
+    gulp
+      .src('src/less/**/*.less')
+      .pipe(less().on('error', error => console.log(error.message)))
+      .pipe(gulp.dest('src/css'))
+  );
 
   gulp.watch('src/**/*').on('change', browserSync.reload);
 });
