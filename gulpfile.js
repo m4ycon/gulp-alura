@@ -30,7 +30,12 @@ gulp.task('build-img', () => {
 gulp.task('usemin', () => {
   return gulp
     .src('src/**/*.html')
-    .pipe(usemin({ js: [uglify], css: [autoprefixer, cssmin] }))
+    .pipe(
+      usemin({
+        js: [uglify],
+        css: [autoprefixer, cssmin],
+      })
+    )
     .pipe(gulp.dest('dist'));
 });
 
